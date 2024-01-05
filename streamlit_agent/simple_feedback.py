@@ -56,12 +56,11 @@ def get_run_url(run_id):
 if st.session_state.get("last_run"):
     run_url = get_run_url(st.session_state.last_run)
     st.sidebar.markdown(f"[Latest Trace: 🛠️]({run_url})")
-    feedback = streamlit_feedback(
+    if feedback := streamlit_feedback(
         feedback_type="faces",
         optional_text_label="[Optional] Please provide an explanation",
         key=f"feedback_{st.session_state.last_run}",
-    )
-    if feedback:
+    ):
         scores = {"😀": 1, "🙂": 0.75, "😐": 0.5, "🙁": 0.25, "😞": 0}
         client.create_feedback(
             st.session_state.last_run,
