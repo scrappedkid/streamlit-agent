@@ -35,10 +35,9 @@ def configure_retriever(uploaded_files):
     embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
     vectordb = DocArrayInMemorySearch.from_documents(splits, embeddings)
 
-    # Define retriever
-    retriever = vectordb.as_retriever(search_type="mmr", search_kwargs={"k": 2, "fetch_k": 4})
-
-    return retriever
+    return vectordb.as_retriever(
+        search_type="mmr", search_kwargs={"k": 2, "fetch_k": 4}
+    )
 
 
 class StreamHandler(BaseCallbackHandler):

@@ -89,12 +89,14 @@ def playback_callbacks(
             elif record["callback_type"] == CallbackType.ON_AGENT_FINISH:
                 handler.on_agent_finish(*record["args"], **record["kwargs"])
 
-    # Return the agent's result
-    for record in records:
-        if record["callback_type"] == CallbackType.ON_AGENT_FINISH:
-            return record["args"][0][0]["output"]
-
-    return "[Missing Agent Result]"
+    return next(
+        (
+            record["args"][0][0]["output"]
+            for record in records
+            if record["callback_type"] == CallbackType.ON_AGENT_FINISH
+        ),
+        "[Missing Agent Result]",
+    )
 
 
 class CapturingCallbackHandler(BaseCallbackHandler):

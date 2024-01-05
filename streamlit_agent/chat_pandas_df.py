@@ -32,9 +32,8 @@ def load_data(uploaded_file):
         ext = uploaded_file.split(".")[-1]
     if ext in file_formats:
         return file_formats[ext](uploaded_file)
-    else:
-        st.error(f"Unsupported file format: {ext}")
-        return None
+    st.error(f"Unsupported file format: {ext}")
+    return None
 
 
 st.set_page_config(page_title="LangChain: Chat with pandas DataFrame", page_icon="🦜")
